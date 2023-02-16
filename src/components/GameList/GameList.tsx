@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "@assets/styles/views/GameList.module.css";
 
-
 type GameList = {
   game_count: number;
   games: {
@@ -44,7 +43,7 @@ export default function GameList(props: { profilID: string }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user_steam_id: import.meta.env.VITE_STEAMID}),
+      body: JSON.stringify({ user_steam_id: import.meta.env.VITE_STEAMID }),
     });
 
     const data: GameList = await fData.json();
@@ -113,6 +112,20 @@ export default function GameList(props: { profilID: string }) {
                   })()}{" "}
                 </p>
               )}
+              {(() => {
+                if (game.rtime_last_played > 0) {
+                  return (
+                    <p>
+                      Last time played:{" "}
+                      {new Date(
+                        game.rtime_last_played * 1000
+                      ).toLocaleDateString()}
+                    </p>
+                  );
+                } else {
+                  return <p>Game Never Played</p>;
+                }
+              })()}
             </div>
           </li>
         ))}
