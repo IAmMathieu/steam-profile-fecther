@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  width: 85vw;
+  color: #eee;
+  height: 168px;
+  padding: 20px;
+  margin: auto;
+  border-radius: 5px;
+  background-color: #222;
+}
+
+img {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 128px;
+  height: 128px;
+}
+
+.infoContainer {
+  padding: 0 15px;
+}
+
+.name {
+  font-size: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: #eee;
+}
+
+.createdTime {
+  font-weight: bold;
+  padding-top: 64px;
+}
