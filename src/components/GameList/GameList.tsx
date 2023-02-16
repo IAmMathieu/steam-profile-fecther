@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "@assets/styles/views/GameList.module.css";
+import GameModal from "../GameModal/GameModal";
 
 type GameList = {
   game_count: number;
@@ -20,6 +21,8 @@ type GameList = {
 };
 
 export default function GameList(props: { profilID: string }) {
+  const [show, setShow] = useState(false);
+  const [gameID, setGameID] = useState(0);
   const [gameList, setGameList] = useState<GameList>({
     game_count: 0,
     games: [
@@ -37,7 +40,6 @@ export default function GameList(props: { profilID: string }) {
   });
 
   async function fetchedData() {
-    console.log(import.meta.env.VITE_STEAMID);
     const fData = await fetch("http://localhost:1337/api/user/ownedgames", {
       method: "POST",
       headers: {
@@ -66,7 +68,14 @@ export default function GameList(props: { profilID: string }) {
       <h2 className={styles.gameCount}>Games Owned: {gameList.game_count}</h2>
       <ul className={styles.listContainer}>
         {gameList.games.map((game) => (
-          <li className={styles.itemContainer} key={game.appid}>
+          <li
+            onClick={() => {
+              setShow(true);
+              setGameID(game.appid)
+            }}
+            className={styles.itemContainer}
+            key={game.appid}
+          >
             <img
               className={styles.gameIcon}
               src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
@@ -130,6 +139,7 @@ export default function GameList(props: { profilID: string }) {
           </li>
         ))}
       </ul>
+      <GameModal onClose={() => setShow(false)} show={show} gameID={gameID}/>
     </>
   );
 }
