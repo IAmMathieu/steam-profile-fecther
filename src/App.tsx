@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./App.css";
 import GameList from "./components/GameList/GameList";
-import GameModal from "./components/GameModal/GameModal";
 import ProfileCard from "./components/ProfileCard/ProfileCard";
 
 function App() {

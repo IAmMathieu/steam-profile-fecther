@@ -71,16 +71,18 @@ export default function GameList(props: { profilID: string }) {
           <li
             onClick={() => {
               setShow(true);
-              setGameID(game.appid)
+              setGameID(game.appid);
             }}
             className={styles.itemContainer}
             key={game.appid}
           >
-            <img
-              className={styles.gameIcon}
-              src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
-              alt={`${game.name} Logo`}
-            />
+            {game.appid > 0 && (
+              <img
+                className={styles.gameIcon}
+                src={`http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`}
+                alt={`${game.name} Logo`}
+              />
+            )}
             <div className={styles.gameInfo}>
               <h2>{game.name}</h2>
               {game.playtime_forever > 0 && (
@@ -139,7 +141,7 @@ export default function GameList(props: { profilID: string }) {
           </li>
         ))}
       </ul>
-      <GameModal onClose={() => setShow(false)} show={show} gameID={gameID}/>
+      <GameModal onClose={() => setShow(false)} show={show} gameID={gameID} />
     </>
   );
 }
