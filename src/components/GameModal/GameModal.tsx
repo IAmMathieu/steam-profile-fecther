@@ -1,14 +1,8 @@
-import styles from "@assets/styles/views/GameModal.module.css";
-import { MouseEventHandler } from "react";
+import styles from "./GameModal.module.css";
+import { Show } from "../../types/Types";
 
-type Show = {
-  show: boolean;
-  onClose: MouseEventHandler<HTMLElement>;
-  gameID: number;
-};
 
 export default function GameModal(props: Show) {
-  console.log(props.gameID);
 
   if (!props.show) {
     return null;

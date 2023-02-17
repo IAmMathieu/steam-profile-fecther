@@ -1,31 +1,7 @@
 import { useEffect, useState } from "react";
-import styles from "@assets/styles/views/ProfileCard.module.css";
-import fetchData from "@helpers/FetchHelper";
-
-type SteamProfile = {
-  steamid: string;
-  communityvisibilitystate: number;
-  profilestate: number;
-  personaname: string;
-  commentpermission: number;
-  profileurl: string;
-  avatar: string;
-  avatarmedium: string;
-  avatarfull: string;
-  avatarhash: string;
-  lastlogoff: number;
-  personastate: number;
-  personastateflags: number;
-  primaryclanid?: string;
-  timecreated?: number;
-  loccountrycode?: string;
-  locstatecode?: string;
-  loccityid?: number;
-  realname?: string;
-  gameid?: number;
-  gameserverip?: string;
-  gameextrainfo?: string;
-};
+import styles from "./ProfileCard.module.css";
+import fetchData from "../../helpers/FetchHelper";
+import { SteamProfile, FetchArgs } from "../../types/Types";
 
 export default function profileCard(props: { profilID: string }) {
   const [steamProfil, setSteamProfil] = useState<SteamProfile>({
@@ -54,7 +30,12 @@ export default function profileCard(props: { profilID: string }) {
   });
 
   useEffect(() => {
-    fetchData("http://localhost:1337/api/user/gps", import.meta.env.VITE_STEAMID).then((fetchedProfile: SteamProfile) => setSteamProfil(fetchedProfile));
+    const args: FetchArgs = {
+      url: "http://localhost:1337/api/user/gps",
+      user_steam_id: import.meta.env.VITE_STEAMID
+    }
+
+    fetchData<SteamProfile>(args).then((fetchedProfile: SteamProfile) => setSteamProfil(fetchedProfile));
   }, []);
 
   return (

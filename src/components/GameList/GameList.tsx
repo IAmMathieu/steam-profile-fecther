@@ -1,30 +1,19 @@
 import { useEffect, useState } from "react";
-import styles from "@assets/styles/views/GameList.module.css";
+import styles from "./GameList.module.css";
 import GameModal from "../GameModal/GameModal";
-import fetchData from "@helpers/FetchHelper";
-
-type GameList = {
-  game_count: number;
-  games: {
-    appid: number;
-    name: string;
-    playtime_forever: number;
-    img_icon_url: string;
-    playtime_windows_forever: number;
-    playtime_mac_forever: number;
-    playtime_linux_forever: number;
-    rtime_last_played: number;
-    has_community_visible_stats?: boolean;
-    content_descriptorids?: number[];
-    has_leaderboards?: boolean;
-    playtime_2weeks?: number;
-  }[];
-};
+import fetchData from "../../helpers/FetchHelper";
+import {
+  GameListInfos,
+  GameInfos,
+  FetchArgs,
+  SingleGameInfos,
+} from "../../types/Types";
+import FormatPlayedTime from "../../helpers/FormatPlayedTime";
 
 export default function GameList(props: { profilID: string }) {
-  const [show, setShow] = useState(false);
-  const [gameID, setGameID] = useState(0);
-  const [gameList, setGameList] = useState<GameList>({
+  const [show, setShow] = useState<boolean>(false);
+  const [gameID, setGameID] = useState<number>();
+  const [gameList, setGameList] = useState<GameListInfos>({
     game_count: 0,
     games: [
       {
@@ -40,28 +29,41 @@ export default function GameList(props: { profilID: string }) {
     ],
   });
 
+  const args: FetchArgs = {
+    url: "http://localhost:1337/api/user/achievements/game",
+    user_steam_id: import.meta.env.VITE_STEAMID,
+    app_id: gameID,
+  };
+
   useEffect(() => {
-    fetchData("http://localhost:1337/api/user/ownedgames", import.meta.env.VITE_STEAMID).then(
-      (data: GameList) => {
-        data.games = data.games.sort(function (a, b) {
-          let textA = a.name.toLowerCase();
-          let textB = b.name.toLowerCase();
-          return textA < textB ? -1 : textA > textB ? 1 : 0;
-        });
-        setGameList(data);
-      }
-    );   
+    const args: FetchArgs = {
+      url: "http://localhost:1337/api/user/ownedgames",
+      user_steam_id: import.meta.env.VITE_STEAMID,
+    };
+
+    fetchData<GameListInfos>(args).then((data: GameListInfos) => {
+      data.games = data.games.sort(function (a, b) {
+        let textA = a.name.toLowerCase();
+        let textB = b.name.toLowerCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
+      setGameList(data);
+    });
   }, []);
 
   return (
     <>
       <h2 className={styles.gameCount}>Games Owned: {gameList.game_count}</h2>
       <ul className={styles.listContainer}>
-        {gameList.games.map((game) => (
+        {gameList.games.map((game: SingleGameInfos) => (
           <li
             onClick={() => {
-              setShow(true);
+              const gameArgs = { ...args, app_id: game.appid };
               setGameID(game.appid);
+              setShow(true);
+              fetchData<GameInfos>(gameArgs).then((gameInfos: GameInfos) =>
+                console.log(gameInfos)
+              );
             }}
             className={styles.itemContainer}
             key={game.appid}
@@ -77,40 +79,7 @@ export default function GameList(props: { profilID: string }) {
               <h2 className={styles.gameName}>{game.name}</h2>
               {game.playtime_forever > 0 && (
                 <p className={styles.playedTime}>
-                  Total Played Time:{" "}
-                  {(() => {
-                    if (Math.floor(game.playtime_forever / (24 * 60)) > 0) {
-                      return (
-                        Math.floor(game.playtime_forever / (24 * 60)) +
-                        " Day(s)"
-                      );
-                    }
-                  })()}{" "}
-                  {(() => {
-                    if (
-                      Math.floor((game.playtime_forever % (24 * 60)) / 60) > 0
-                    ) {
-                      return (
-                        Math.floor((game.playtime_forever % (24 * 60)) / 60) +
-                        " Hour(s)"
-                      );
-                    }
-                  })()}{" "}
-                  {""}
-                  {(() => {
-                    if (
-                      game.playtime_forever -
-                        Math.floor(game.playtime_forever / 60) * 60 >
-                      0
-                    ) {
-                      return (
-                        Math.floor(
-                          game.playtime_forever -
-                            Math.floor(game.playtime_forever / 60) * 60
-                        ) + " Minute(s)"
-                      );
-                    }
-                  })()}{" "}
+                  Total Played Time:{" "}{FormatPlayedTime(game.playtime_forever)}
                 </p>
               )}
               {(() => {
@@ -131,7 +100,7 @@ export default function GameList(props: { profilID: string }) {
           </li>
         ))}
       </ul>
-      <GameModal onClose={() => setShow(false)} show={show} gameID={gameID} />
+      <GameModal onClose={() => setShow(false)} show={show} />
     </>
   );
 }
