@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "@assets/styles/views/ProfileCard.module.css";
+import fetchData from "@helpers/FetchHelper";
 
 type SteamProfile = {
   steamid: string;
@@ -52,23 +53,8 @@ export default function profileCard(props: { profilID: string }) {
     gameextrainfo: "",
   });
 
-  async function fetchedData() {
-    const fData = await fetch("http://localhost:1337/api/user/gps", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // FIXME: need to pass steam 64bit id as a string to avoid javascript precision issue, stringify cant serialize BigInt. Example below
-      body: JSON.stringify({ user_steam_id: "76561198042858555" }),
-    });
-
-    const data: SteamProfile = await fData.json();
-
-    setSteamProfil(data);
-  }
-
   useEffect(() => {
-    fetchedData();
+    fetchData("http://localhost:1337/api/user/gps", import.meta.env.VITE_STEAMID).then((fetchedProfile: SteamProfile) => setSteamProfil(fetchedProfile));
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "@assets/styles/views/GameList.module.css";
 import GameModal from "../GameModal/GameModal";
+import fetchData from "@helpers/FetchHelper";
 
 type GameList = {
   game_count: number;
@@ -39,28 +40,17 @@ export default function GameList(props: { profilID: string }) {
     ],
   });
 
-  async function fetchedData() {
-    const fData = await fetch("http://localhost:1337/api/user/ownedgames", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user_steam_id: import.meta.env.VITE_STEAMID }),
-    });
-
-    const data: GameList = await fData.json();
-
-    data.games = data.games.sort(function (a, b) {
-      let textA = a.name.toLowerCase();
-      let textB = b.name.toLowerCase();
-      return textA < textB ? -1 : textA > textB ? 1 : 0;
-    });
-
-    setGameList(data);
-  }
-
   useEffect(() => {
-    fetchedData();
+    fetchData("http://localhost:1337/api/user/ownedgames", import.meta.env.VITE_STEAMID).then(
+      (data: GameList) => {
+        data.games = data.games.sort(function (a, b) {
+          let textA = a.name.toLowerCase();
+          let textB = b.name.toLowerCase();
+          return textA < textB ? -1 : textA > textB ? 1 : 0;
+        });
+        setGameList(data);
+      }
+    );   
   }, []);
 
   return (
@@ -84,9 +74,9 @@ export default function GameList(props: { profilID: string }) {
               />
             )}
             <div className={styles.gameInfo}>
-              <h2>{game.name}</h2>
+              <h2 className={styles.gameName}>{game.name}</h2>
               {game.playtime_forever > 0 && (
-                <p>
+                <p className={styles.playedTime}>
                   Total Played Time:{" "}
                   {(() => {
                     if (Math.floor(game.playtime_forever / (24 * 60)) > 0) {
@@ -134,7 +124,7 @@ export default function GameList(props: { profilID: string }) {
                     </p>
                   );
                 } else {
-                  return <p>Game Never Played</p>;
+                  return <p className={styles.playedTime}>Game Never Played</p>;
                 }
               })()}
             </div>

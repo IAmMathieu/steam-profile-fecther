@@ -1,10 +1,10 @@
 .container {
   display: flex;
-  width: 85vw;
+  width: 85%;
   color: #eee;
-  height: 168px;
-  padding: 20px;
-  margin: auto;
+  height: 10.5rem;
+  padding: 1.25rem;
+  margin: 1rem auto;
   border-radius: 5px;
   background-color: #222;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
@@ -15,12 +15,12 @@
 img {
   border: 1px solid #ddd;
   border-radius: 8px;
-  width: 128px;
-  height: 128px;
+  width: 8rem;
+  height: 8rem;
 }
 
 .infoContainer {
-  padding: 0 15px;
+  padding: 0 2rem;
 }
 
 .name {
@@ -34,5 +34,5 @@ a {
 
 .createdTime {
   font-weight: bold;
-  padding-top: 64px;
+  padding-top: 4rem;
 }

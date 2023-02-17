@@ -1,24 +1,23 @@
 .gameCount {
   font-weight: bold;
-  font-size: 42px;
+  font-size: 2.8rem;
   color: #eee;
   text-align: center;
-  padding: 25px;
+  padding: 1.56rem;
 }
 
 .listContainer {
   background-color: #333;
-  /* border: 1px solid #fff;
-  border-radius: 5px; */
+  border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   margin: auto;
-  width: 75vw;
+  width: 75%;
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  padding: 10px;
+  gap: .3rem;
+  padding: 0.62rem;
 }
 
 .itemContainer {
@@ -39,11 +38,17 @@
 }
 
 .gameInfo {
-  padding: 0 15px;
+  padding: 0 1rem;
   color: #eee;
 }
 
 .gameIcon {
-  width: 64px;
-  height: 64px;
+  width: 4rem;
+  height: 4rem;
+}
+
+.gameName {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 0.62rem;
 }

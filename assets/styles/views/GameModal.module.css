@@ -11,12 +11,12 @@
 }
 
 .modalContent {
-  width: 500px;
-  background-color: #fff;
+  width: 31.25rem;
+  background-color: #666;
 }
 
 .modalHeader, .modalFooter {
-  padding: 10px;
+  padding: 0.62rem;
 }
 
 .modalTitle {
@@ -24,7 +24,7 @@
 }
 
 .modalBody {
-  padding: 10px;
+  padding: 0.62rem;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
 }
