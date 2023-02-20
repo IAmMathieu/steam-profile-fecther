@@ -5,20 +5,19 @@ export default function FormatPlayedTime(timeInMinutes: number) {
     timeInMinutes - Math.floor(timeInMinutes / 60) * 60
   );
 
-  let timePlayed = ""
+  let timePlayed = '';
 
   if (days > 0) {
-    timePlayed += days + " Day(s) "
+    timePlayed += `${days} Day(s) `;
   }
 
   if (hours > 0) {
-    timePlayed += hours + " Hour(s) "
+    timePlayed += `${hours} Hour(s) `;
   }
 
   if (minutes > 0) {
-    timePlayed += minutes + " Minutes"
+    timePlayed += `${minutes} Minutes`;
   }
 
-  return timePlayed.trim()
-
+  return timePlayed.trim();
 }

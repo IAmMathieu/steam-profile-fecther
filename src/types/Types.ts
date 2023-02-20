@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { KeyboardEventHandler, MouseEventHandler } from 'react';
 
 export type SteamProfile = {
   steamid: string;
@@ -23,6 +23,7 @@ export type SteamProfile = {
   gameid?: number;
   gameserverip?: string;
   gameextrainfo?: string;
+  error?: string;
 };
 
 export type GameListInfos = {
@@ -40,7 +41,8 @@ export type GameListInfos = {
     content_descriptorids?: number[];
     has_leaderboards?: boolean;
     playtime_2weeks?: number;
-  }[]
+  }[];
+  error?: string;
 };
 
 export type SingleGameInfos = {
@@ -56,35 +58,30 @@ export type SingleGameInfos = {
   content_descriptorids?: number[];
   has_leaderboards?: boolean;
   playtime_2weeks?: number;
-}
+  error?: string;
+};
 
 export type GameInfos = {
   playerstats: {
-    steamID: string,
-    gameName: string,
+    steamID: string;
+    gameName: string;
     achievements: {
-      name: string,
-      achieved: number,
-    }[],
+      name: string;
+      achieved: number;
+    }[];
     stats: {
-      name: string,
-      value: number
-    }[]
-  }
-}
-
-export type GameAchievementsArgs = {
-  url: string,
-  user_steam_id: string,
-  app_id: number
-}
+      name: string;
+      value: number;
+    }[];
+  };
+  error?: string;
+};
 
 export type FetchArgs = {
-  url: string,
-  user_steam_id?: string
-  app_id?: number
-}
-
+  url: string;
+  user_steam_id?: string;
+  app_id?: number;
+};
 
 export type Show = {
   show: boolean;
