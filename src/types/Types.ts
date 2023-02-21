@@ -1,5 +1,3 @@
-import { KeyboardEventHandler, MouseEventHandler } from 'react';
-
 export type SteamProfile = {
   steamid: string;
   communityvisibilitystate: number;
@@ -81,9 +79,4 @@ export type FetchArgs = {
   url: string;
   user_steam_id?: string;
   app_id?: number;
-};
-
-export type Show = {
-  show: boolean;
-  onClose: MouseEventHandler<HTMLElement>;
 };

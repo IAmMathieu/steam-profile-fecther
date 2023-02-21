@@ -1,4 +1,8 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './GameList.module.css';
 import GameModal from '../GameModal/GameModal';
 import fetchData from '../../helpers/FetchHelper';
@@ -13,6 +17,7 @@ import FormatPlayedTime from '../../helpers/FormatPlayedTime';
 export default function GameList() {
   const [show, setShow] = useState<boolean>(false);
   const [gameID, setGameID] = useState<number>();
+  const [gameInfo, setGameInfo] = useState<GameInfos>();
   const [gameList, setGameList] = useState<GameListInfos>({
     game_count: 0,
     games: [
@@ -28,6 +33,18 @@ export default function GameList() {
       },
     ],
   });
+
+  const notify = () =>
+    toast.error('No Data Found For This Game', {
+      position: 'top-center',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    });
 
   const achievementsArgs: FetchArgs = {
     url: 'http://localhost:1337/api/user/achievements/game',
@@ -45,6 +62,7 @@ export default function GameList() {
       const sortedGames = data.games.sort((a, b) => {
         const textA = a.name.toLowerCase();
         const textB = b.name.toLowerCase();
+        // eslint-disable-next-line no-nested-ternary
         return textA < textB ? -1 : textA > textB ? 1 : 0;
       });
       setGameList({ ...data, games: sortedGames });
@@ -61,11 +79,15 @@ export default function GameList() {
               const gameArgs = { ...achievementsArgs, app_id: game.appid };
               setGameID(game.appid);
               fetchData<GameInfos>(gameArgs).then((gameInfos: GameInfos) => {
-                if (gameInfos.error) {
-                  alert('erreur');
+                if (
+                  gameInfos.error ||
+                  gameInfos.playerstats.gameName === '' ||
+                  gameInfos.playerstats.gameName.match(/ValveTestApp/)
+                ) {
+                  notify();
                 } else {
                   console.log(gameInfos);
-
+                  setGameInfo(gameInfos);
                   setShow(true);
                 }
               });
@@ -104,7 +126,25 @@ export default function GameList() {
           </li>
         ))}
       </ul>
-      <GameModal onClose={() => setShow(false)} show={show} />
+      {gameInfo && (
+        <GameModal
+          onClose={() => setShow(false)}
+          show={show}
+          gameData={gameInfo}
+        />
+      )}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 }

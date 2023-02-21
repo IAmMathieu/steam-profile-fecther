@@ -1,10 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import { MouseEventHandler } from 'react';
 import styles from './GameModal.module.css';
-import { Show } from '../../types/Types';
+import { GameInfos } from '../../types/Types';
 
-export default function GameModal(props: Show) {
-  const { show, onClose } = props;
+export default function GameModal(props: {
+  show: boolean;
+  onClose: MouseEventHandler;
+  gameData: GameInfos;
+}) {
+  const { show, onClose, gameData } = props;
   if (!show) {
     return null;
   }
@@ -12,7 +17,9 @@ export default function GameModal(props: Show) {
     <div className={styles.modal} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
-          <div className={styles.modalTitle}>My Modal</div>
+          <div className={styles.modalTitle}>
+            {gameData.playerstats.gameName}
+          </div>
         </div>
         <div className={styles.modalBody}>My Modal Body</div>
         <div className={styles.modalFooter}>

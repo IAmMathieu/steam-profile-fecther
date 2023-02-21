@@ -26,6 +26,7 @@ specifiers:
   prettier: ^2.8.4
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-toastify: ^9.1.1
   typescript: ^4.9.3
   typescript-plugin-css-modules: ^4.1.1
   vite: ^4.0.0
@@ -58,6 +59,7 @@ devDependencies:
   postcss-import: 15.1.0_postcss@8.4.21
   postcss-preset-env: 8.0.1_postcss@8.4.21
   prettier: 2.8.4
+  react-toastify: 9.1.1_biqbaboplfbrettd7655fr4n2y
   typescript: 4.9.5
   typescript-plugin-css-modules: 4.1.1_typescript@4.9.5
   vite: 4.1.1_@types+node@18.13.0
@@ -1356,6 +1358,11 @@ packages:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
+    dev: true
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
     dev: true
 
   /color-convert/1.9.3:
@@ -3947,7 +3954,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -3958,12 +3964,22 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /react-toastify/9.1.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-pkFCla1z3ve045qvjEmn2xOJOy4ZciwRXm1oMPULVkELi5aJdHCN/FHnuqXq8IwGDLB7PPk2/J6uP9D8ejuiRw==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      clsx: 1.2.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: true
+
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /read-cache/1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -4085,7 +4101,6 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /semver/5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
