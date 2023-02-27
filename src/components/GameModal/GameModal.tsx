@@ -21,7 +21,25 @@ export default function GameModal(props: {
             {gameData.playerstats.gameName}
           </div>
         </div>
-        <div className={styles.modalBody}>My Modal Body</div>
+        <div className={styles.achievements}>Achievements unlocked:</div>
+        <ul>
+          {gameData.playerstats.achievements.map((achievement) => (
+            <li key={achievement.name}>{achievement.name}</li>
+          ))}
+        </ul>
+        {gameData.playerstats.stats && (
+          <>
+            <div className={styles.stats}>Player stats:</div>
+            <ul>
+              {gameData.playerstats.stats.map((stat) => (
+                <p key={stat.name}>
+                  {stat.name}: {stat.value}
+                </p>
+              ))}
+            </ul>
+          </>
+        )}
+
         <div className={styles.modalFooter}>
           <button type="button" className={styles.button} onClick={onClose}>
             Close Me

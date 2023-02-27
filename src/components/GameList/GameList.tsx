@@ -85,10 +85,20 @@ export default function GameList() {
                   gameInfos.playerstats.gameName.match(/ValveTestApp/)
                 ) {
                   notify();
-                } else {
-                  console.log(gameInfos);
+                } else if (
+                  Object.prototype.hasOwnProperty.call(
+                    gameInfos.playerstats,
+                    'achievements'
+                  ) ||
+                  Object.prototype.hasOwnProperty.call(
+                    gameInfos.playerstats,
+                    'stats'
+                  )
+                ) {
                   setGameInfo(gameInfos);
                   setShow(true);
+                } else {
+                  notify();
                 }
               });
             }}
@@ -137,7 +147,7 @@ export default function GameList() {
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
-        newestOnTop={false}
+        newestOnTop
         closeOnClick
         rtl={false}
         pauseOnFocusLoss

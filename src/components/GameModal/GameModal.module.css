@@ -23,7 +23,13 @@
   margin: 0;
 }
 
-.modalBody {
+.achievements {
+  padding: 0.62rem;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.stats {
   padding: 0.62rem;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
