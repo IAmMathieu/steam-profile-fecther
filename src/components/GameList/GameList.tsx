@@ -18,21 +18,7 @@ export default function GameList() {
   const [show, setShow] = useState<boolean>(false);
   const [gameID, setGameID] = useState<number>();
   const [gameInfo, setGameInfo] = useState<GameInfos>();
-  const [gameList, setGameList] = useState<GameListInfos>({
-    game_count: 0,
-    games: [
-      {
-        appid: 0,
-        name: '',
-        playtime_forever: 0,
-        img_icon_url: '',
-        playtime_windows_forever: 0,
-        playtime_mac_forever: 0,
-        playtime_linux_forever: 0,
-        rtime_last_played: 0,
-      },
-    ],
-  });
+  const [gameList, setGameList] = useState<GameListInfos>();
 
   const notify = () =>
     toast.error('No Data Found For This Game', {
@@ -71,9 +57,9 @@ export default function GameList() {
 
   return (
     <>
-      <h2 className={styles.gameCount}>Games Owned: {gameList.game_count}</h2>
+      <h2 className={styles.gameCount}>Games Owned: {gameList?.game_count}</h2>
       <ul className={styles.listContainer}>
-        {gameList.games.map((game: SingleGameInfos) => (
+        {gameList?.games.map((game: SingleGameInfos) => (
           <li
             onClick={() => {
               const gameArgs = { ...achievementsArgs, app_id: game.appid };
@@ -150,7 +136,7 @@ export default function GameList() {
         newestOnTop
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
+        pauseOnFocusLoss={false}
         draggable
         pauseOnHover
         theme="dark"
